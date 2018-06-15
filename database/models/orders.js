@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  const Orders = sequelize.define('orders', {
+  const orders = sequelize.define('orders', {
     customerName: DataTypes.STRING,
     customerAddress: DataTypes.TEXT,
     item: DataTypes.STRING,
@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  Orders.associate = function (models) {
+  orders.associate = function (models) {
     // associations can be defined here
   };
 
-  return Orders;
+  return orders;
 };
 
 const setUpdatedDate = function (order, options) {

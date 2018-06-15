@@ -8,5 +8,5 @@ module.exports = (app) => {
   /*
     Customers
    */
-  app.get('/customers/:name/orders', ordersCtrl.getOrdersByCustomer);
+  app.get('/customers/:name/orders', ordersCtrl.getCustomerOrders);
 };
