@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "7.7.0"
+    "node": "8.0.0"
   },
   "scripts": {
     "start": "node ./server",
     "watch": "./node_modules/.bin/nodemon ./server",
     "test": "NODE_ENV=test mocha ./test/**/*.spec.js --timeout 5000",
-    "lint": "./node_modules/.bin/eslint"
+    "lint": "./node_modules/.bin/eslint",
+    "sequelize": "./node_modules/.bin/sequelize"
   },
   "nodemonConfig": {
     "ignore": [
