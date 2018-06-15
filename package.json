@@ -9,6 +9,7 @@
     "start": "node ./server",
     "watch": "./node_modules/.bin/nodemon ./server",
     "test": "NODE_ENV=test mocha ./test/**/*.spec.js --timeout 5000",
+    "test-units": "NODE_ENV=test mocha ./test/unit/**/*.spec.js",
     "lint": "./node_modules/.bin/eslint",
     "sequelize": "./node_modules/.bin/sequelize"
   },

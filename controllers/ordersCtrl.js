@@ -1,4 +1,5 @@
 const ordersFacade = require('../database/facades/ordersFacade');
+const validateParameter = require('../helpers/controller').validateParameter;
 
 /**
  * The controller for the Orders resource
@@ -25,10 +26,6 @@ const ordersCtrl = {
         res.send(orders);
       });
   },
-};
-
-const validateParameter = (param) => {
-  return !(!param || param.trim() === '');
 };
 
 module.exports = ordersCtrl;
