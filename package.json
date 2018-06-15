@@ -8,8 +8,9 @@
   "scripts": {
     "start": "node ./server",
     "watch": "./node_modules/.bin/nodemon ./server",
-    "test": "NODE_ENV=test mocha ./test/**/*.spec.js --timeout 5000",
-    "test-units": "NODE_ENV=test mocha ./test/unit/**/*.spec.js",
+    "test-units": "mocha ./test/unit/**/*.spec.js",
+    "test-database": "export NODE_ENV=test; yarn migrate-refresh; mocha ./test/database/**/*.spec.js",
+    "migrate-refresh": "sequelize db:migrate:undo:all; sequelize db:migrate; sequelize db:seed:all",
     "lint": "./node_modules/.bin/eslint",
     "sequelize": "./node_modules/.bin/sequelize"
   },
