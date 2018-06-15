@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
 
   // send error response
   res.status(err.status || 500);
-  res.send({ message: 'Not found.' });
+  res.send({ message: err.message });
 });
 
 module.exports = app;
