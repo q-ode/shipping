@@ -5,12 +5,24 @@ module.exports = (sequelize, DataTypes) => {
     customerAddress: DataTypes.TEXT,
     item: DataTypes.STRING,
     price: DataTypes.INTEGER,
-    currency: DataTypes.STRING
-  }, {});
+    currency: DataTypes.STRING,
+    createdAt: {
+      type: DataTypes.DATE,
+      default: Sequelize.NOW
+    }
+  }, {
+    hooks: {
+      beforeUpdate: setUpdatedDate
+    }
+  });
 
-  Orders.associate = function(models) {
+  Orders.associate = function (models) {
     // associations can be defined here
   };
 
   return Orders;
+};
+
+const setUpdatedDate = function (order, options) {
+  order.updatedAt = new Date();
 };
