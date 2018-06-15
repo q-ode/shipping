@@ -9,4 +9,5 @@ module.exports = (app) => {
     Customers
    */
   app.get('/customers/:name/orders', ordersCtrl.getCustomerOrders);
+  app.get('/addresses/:address/orders', ordersCtrl.getAddressOrders);
 };

@@ -16,7 +16,23 @@ const ordersFacade = {
     return Orders.findAll({
       attributes: ['id', 'item', 'price', 'currency'],
       where: {
-        customerName: customerName
+        customerName: customerName.trim()
+      }
+    });
+  },
+
+  /**
+   * Queries the orders table for order details based on customer address.
+   *
+   * @param {String} customerAddress - address of customer
+   *
+   * @return {Promise<Array>} - a list of orders
+   */
+  getOrdersByCustomerAddress(customerAddress) {
+    return Orders.findAll({
+      attributes: ['id', 'item', 'price', 'currency'],
+      where: {
+        customerAddress: customerAddress.trim()
       }
     });
   }

@@ -26,6 +26,27 @@ const ordersCtrl = {
         res.send(orders);
       });
   },
+
+  /**
+   * Returns all orders based on customer address
+   *
+   * @param req - HTTP Request containing the address
+   * @param res - HTTP Response
+   *
+   * @return {Array} - A list of orders for that customer address
+   */
+  getAddressOrders(req, res) {
+    const customerAddress = req.params.address;
+
+    if (!validateParameter(customerAddress)) {
+      return res.status(400).send({ message: 'Invalid parameters.' });
+    }
+
+    ordersFacade.getOrdersByCustomerAddress(customerAddress)
+      .then(orders => {
+        res.send(orders);
+      });
+  },
 };
 
 module.exports = ordersCtrl;

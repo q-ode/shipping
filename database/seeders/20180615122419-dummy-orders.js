@@ -3,7 +3,7 @@ module.exports = {
     return queryInterface.bulkInsert('orders', [
       {
         customerName: 'Peter Lustig',
-        customerAddress: 'Steindamm 80 ',
+        customerAddress: 'Steindamm 80',
         item: 'Macbook',
         price: 1700,
         currency: 'EUR',
