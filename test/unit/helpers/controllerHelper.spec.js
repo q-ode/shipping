@@ -2,7 +2,7 @@ const chai = require('chai');
 const expect = chai.expect;
 
 const validateParameter =
-  require('../../../helpers/controller').validateParameter;
+  require('../../../helpers/controllerHelper').validateParameter;
 
 describe('Controller Helper', () => {
   describe('#validateParameter', () => {

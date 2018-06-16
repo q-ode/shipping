@@ -1,4 +1,5 @@
 const Orders = require('../models').orders;
+const modelHelper = require('../../helpers/modelHelper');
 
 /**
  * Wraps the orders model and provides the functions more elegantly
@@ -34,6 +35,28 @@ const ordersFacade = {
       where: {
         customerAddress: customerAddress.trim()
       }
+    });
+  },
+
+  /**
+   * Creates a new order, and uses a promise to return an appropriate response.
+   *
+   * @param {Object} payload - object containing required fields
+   *
+   * @return {Promise<*>} - on success it returns the order on error it returns
+   * an array of failed validations
+   */
+  createOrder(payload) {
+    return new Promise((resolve, reject) => {
+      const { customerName, customerAddress, item, price, currency } = payload;
+
+      Orders.create({
+        customerName, customerAddress, item, price, currency
+      }).then((order) => {
+        resolve(order);
+      }).catch((error) => {
+        reject(modelHelper.getError(error));
+      });
     });
   }
 };

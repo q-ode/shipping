@@ -1,5 +1,5 @@
 const ordersFacade = require('../database/facades/ordersFacade');
-const validateParameter = require('../helpers/controller').validateParameter;
+const validateParameter = require('../helpers/controllerHelper').validateParameter;
 
 /**
  * The controller for the Orders resource
@@ -47,6 +47,20 @@ const ordersCtrl = {
         res.send(orders);
       });
   },
+
+  /**
+   * Creates an order based on the fields passed
+   *
+   * @param req - HTTP Request containing the order values
+   * @param res - HTTP Response
+   *
+   * @return {Object} - The created order
+   */
+  create(req, res) {
+    ordersFacade.createOrder(req.body)
+      .then((order) => res.status(201).send(order))
+      .catch((errors) => res.status(400).send(errors));
+  }
 };
 
 module.exports = ordersCtrl;

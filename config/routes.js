@@ -6,8 +6,9 @@ module.exports = (app) => {
   });
 
   /*
-    Customers
+    Orders
    */
+  app.post('/orders', ordersCtrl.create);
   app.get('/customers/:name/orders', ordersCtrl.getCustomerOrders);
   app.get('/addresses/:address/orders', ordersCtrl.getAddressOrders);
 };
