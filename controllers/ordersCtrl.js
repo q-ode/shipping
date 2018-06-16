@@ -80,7 +80,25 @@ const ordersCtrl = {
     ordersFacade.updateOrder(orderId, req.body)
       .then((order) => res.send(order))
       .catch((errors) => res.status(400).send(errors));
-  }
+  },
+
+  /**
+   * Deletes an order based on the id
+   *
+   * @param req - HTTP Request containing the order values
+   * @param res - HTTP Response
+   */
+  delete(req, res) {
+    const orderId = req.params.id;
+
+    if (!validateParameter(orderId)) {
+      return res.status(400).send({ message: 'Invalid parameter.' });
+    }
+
+    ordersFacade.deleteOrder(orderId)
+      .then(() => res.send())
+      .catch((errors) => res.status(400).send(errors));
+  },
 };
 
 module.exports = ordersCtrl;

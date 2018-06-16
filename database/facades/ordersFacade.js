@@ -91,6 +91,30 @@ const ordersFacade = {
         });
     });
   },
+
+  /**
+   * Deletes and order, and uses a promise to return an appropriate response.
+   *
+   * @param {Number} id - unique id of the order to be updated
+   *
+   * @return {Promise<*>} - on success it returns the order on error it returns
+   * an array of failed validations
+   */
+  deleteOrder(id) {
+    return new Promise((resolve, reject) => {
+      Orders.destroy({ where: { id } })
+        .then((noOfDeletedRecords) => {
+          if (parseInt(noOfDeletedRecords) > 0) {
+            resolve(noOfDeletedRecords);
+          } else {
+            reject(['No record deleted.'])
+          }
+        })
+        .catch((error) => {
+          reject(modelHelper.getError(error));
+        });
+    });
+  },
 };
 
 module.exports = ordersFacade;

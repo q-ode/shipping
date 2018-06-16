@@ -216,4 +216,22 @@ describe('Orders Facade', () => {
         })
     });
   });
+
+  describe('#deleteOrder', () => {
+    it('Should delete an order given valid id', (done) => {
+      ordersFacade.deleteOrder(8)
+        .then((noOfDeletedRecords) => {
+          expect(noOfDeletedRecords).to.equal(1);
+          done();
+        });
+    });
+
+    it('Should return and error for an invalid id', (done) => {
+      ordersFacade.deleteOrder(20)
+        .catch((error) => {
+          expect(error).to.deep.equal(['No record deleted.']);
+          done();
+        });
+    });
+  });
 });
