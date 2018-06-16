@@ -52,13 +52,45 @@ const ordersFacade = {
 
       Orders.create({
         customerName, customerAddress, item, price, currency
-      }).then((order) => {
-        resolve(order);
-      }).catch((error) => {
-        reject(modelHelper.getError(error));
-      });
+      })
+        .then((order) => {
+          resolve(order);
+        })
+        .catch((error) => {
+          reject(modelHelper.getError(error));
+        });
     });
-  }
+  },
+
+  /**
+   * Updates and order, and uses a promise to return an appropriate response.
+   *
+   * @param {Number} id - unique id of the order to be updated
+   * @param {Object} newValues - object containing new fields to be updated
+   *
+   * @return {Promise<*>} - on success it returns the order on error it returns
+   * an array of failed validations
+   */
+  updateOrder(id, newValues) {
+    return new Promise((resolve, reject) => {
+      Orders.update(newValues, { where: { id }, returning: true })
+        .then((response) => {
+          /* manual array access here because Sequelize returns an array.
+          The first value is the number of rows affected and the second is an
+          array of the rows, which will always be an array of one object as the
+          id is the primary key.
+          */
+          if (parseInt(response[0]) === 1) {
+            resolve(response[1][0]);
+          } else {
+            reject(['No records updated.'])
+          }
+        })
+        .catch((error) => {
+          reject(modelHelper.getError(error));
+        });
+    });
+  },
 };
 
 module.exports = ordersFacade;

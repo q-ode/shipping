@@ -18,7 +18,7 @@ const ordersCtrl = {
     const customerName = req.params.name;
 
     if (!validateParameter(customerName)) {
-      return res.status(400).send({ message: 'Invalid parameters.' });
+      return res.status(400).send({ message: 'Invalid parameter.' });
     }
 
     ordersFacade.getOrdersByCustomerName(customerName)
@@ -39,7 +39,7 @@ const ordersCtrl = {
     const customerAddress = req.params.address;
 
     if (!validateParameter(customerAddress)) {
-      return res.status(400).send({ message: 'Invalid parameters.' });
+      return res.status(400).send({ message: 'Invalid parameter' });
     }
 
     ordersFacade.getOrdersByCustomerAddress(customerAddress)
@@ -59,6 +59,26 @@ const ordersCtrl = {
   create(req, res) {
     ordersFacade.createOrder(req.body)
       .then((order) => res.status(201).send(order))
+      .catch((errors) => res.status(400).send(errors));
+  },
+
+  /**
+   * Update an order based on the fields passed
+   *
+   * @param req - HTTP Request containing the order values
+   * @param res - HTTP Response
+   *
+   * @return {Object} - The created order
+   */
+  update(req, res) {
+    const orderId = req.params.id;
+
+    if (!validateParameter(orderId)) {
+      return res.status(400).send({ message: 'Invalid parameter.' });
+    }
+
+    ordersFacade.updateOrder(orderId, req.body)
+      .then((order) => res.send(order))
       .catch((errors) => res.status(400).send(errors));
   }
 };

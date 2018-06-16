@@ -182,4 +182,38 @@ describe('Orders Facade', () => {
         });
     });
   });
+
+  describe('#updateOrder', () => {
+    it('Should update an order given valid parameters', (done) => {
+      const newValues = {
+        customerName: 'John Doe',
+        customerAddress: 'Sesame street, 80F',
+        item: 'Something borrowed',
+        price: 20,
+        currency: 'USD'
+      };
+
+      ordersFacade.updateOrder(8, newValues)
+        .then((order) => {
+          expect(order.customerName).to.equal(newValues.customerName);
+          done();
+        })
+    });
+
+    it('Should NOT update an order that doesn\'t exist', (done) => {
+      const newValues = {
+        customerName: 'John Doe',
+        customerAddress: 'Sesame street, 80F',
+        item: 'Something borrowed',
+        price: 20,
+        currency: 'USD'
+      };
+
+      ordersFacade.updateOrder(30, newValues)
+        .catch((errors) => {
+          expect(errors).to.deep.equal(['No records updated.']);
+          done();
+        })
+    });
+  });
 });
