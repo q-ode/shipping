@@ -22,6 +22,8 @@ const formatMessages = (messages) => {
 
     return commaDelimitedMessageEngingWithAndSymbol;
   }
+
+  return messages;
 };
 
 module.exports = {
