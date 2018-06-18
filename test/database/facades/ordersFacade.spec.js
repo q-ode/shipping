@@ -206,12 +206,12 @@ describe('Orders Facade', () => {
         customerAddress: 'Sesame street, 80F',
         item: 'Something borrowed',
         price: 20,
-        currency: 'USD'
+        currency: 'USD',
       };
 
       ordersFacade.updateOrder(30, newValues)
         .catch((errors) => {
-          expect(errors).to.deep.equal(['No records updated.']);
+          expect(errors).to.deep.equal(['No records updated']);
           done();
         })
     });
@@ -229,7 +229,7 @@ describe('Orders Facade', () => {
     it('Should return and error for an invalid id', (done) => {
       ordersFacade.deleteOrder(20)
         .catch((error) => {
-          expect(error).to.deep.equal(['No record deleted.']);
+          expect(error).to.deep.equal(['No record deleted']);
           done();
         });
     });

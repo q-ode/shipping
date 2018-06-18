@@ -18,8 +18,8 @@ const ordersFacade = {
     return Orders.findAll({
       attributes: ['id', 'item', 'price', 'currency'],
       where: {
-        customerName: customerName.trim()
-      }
+        customerName: customerName.trim(),
+      },
     });
   },
 
@@ -34,8 +34,8 @@ const ordersFacade = {
     return Orders.findAll({
       attributes: ['id', 'item', 'price', 'currency'],
       where: {
-        customerAddress: customerAddress.trim()
-      }
+        customerAddress: customerAddress.trim(),
+      },
     });
   },
 
@@ -49,10 +49,12 @@ const ordersFacade = {
    */
   createOrder(payload) {
     return new Promise((resolve, reject) => {
-      const { customerName, customerAddress, item, price, currency } = payload;
+      const {
+        customerName, customerAddress, item, price, currency,
+      } = payload;
 
       Orders.create({
-        customerName, customerAddress, item, price, currency
+        customerName, customerAddress, item, price, currency,
       })
         .then((order) => {
           resolve(order);
@@ -81,10 +83,10 @@ const ordersFacade = {
           array of the rows, which will always be an array of one object as the
           id is the primary key.
           */
-          if (parseInt(response[0]) === 1) {
+          if (parseInt(response[0], 10) === 1) {
             resolve(response[1][0]);
           } else {
-            reject(['No records updated'])
+            reject(['No records updated']);
           }
         })
         .catch((error) => {
@@ -105,10 +107,10 @@ const ordersFacade = {
     return new Promise((resolve, reject) => {
       Orders.destroy({ where: { id } })
         .then((noOfDeletedRecords) => {
-          if (parseInt(noOfDeletedRecords) > 0) {
+          if (parseInt(noOfDeletedRecords, 10) > 0) {
             resolve(noOfDeletedRecords);
           } else {
-            reject(['No record deleted'])
+            reject(['No record deleted']);
           }
         })
         .catch((error) => {
@@ -126,9 +128,9 @@ const ordersFacade = {
     return Orders.findAll({
       attributes: ['item', [sequelize.fn('count', sequelize.col('item')), 'count']],
       group: ['item'],
-      raw: true
+      raw: true,
     });
-  }
+  },
 };
 
 module.exports = ordersFacade;

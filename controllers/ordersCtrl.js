@@ -24,7 +24,7 @@ const ordersCtrl = {
     }
 
     ordersFacade.getOrdersByCustomerName(customerName)
-      .then(orders => {
+      .then((orders) => {
         res.send(orders);
       });
   },
@@ -45,7 +45,7 @@ const ordersCtrl = {
     }
 
     ordersFacade.getOrdersByCustomerAddress(customerAddress)
-      .then(orders => {
+      .then((orders) => {
         res.send(orders);
       });
   },
@@ -60,8 +60,8 @@ const ordersCtrl = {
    */
   create(req, res) {
     ordersFacade.createOrder(req.body)
-      .then((order) => res.status(201).send(order))
-      .catch((errors) => res.status(400).send({ message: formatMessages(errors) }));
+      .then(order => res.status(201).send(order))
+      .catch(errors => res.status(400).send({ message: formatMessages(errors) }));
   },
 
   /**
@@ -80,8 +80,8 @@ const ordersCtrl = {
     }
 
     ordersFacade.updateOrder(orderId, req.body)
-      .then((order) => res.send(order))
-      .catch((errors) => res.status(400).send({ message: formatMessages(errors) }));
+      .then(order => res.send(order))
+      .catch(errors => res.status(400).send({ message: formatMessages(errors) }));
   },
 
   /**
@@ -99,7 +99,7 @@ const ordersCtrl = {
 
     ordersFacade.deleteOrder(orderId)
       .then(() => res.send())
-      .catch((errors) => res.status(404).send({ message: formatMessages(errors) }));
+      .catch(errors => res.status(404).send({ message: formatMessages(errors) }));
   },
 
   /**
