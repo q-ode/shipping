@@ -1,5 +1,6 @@
 const Orders = require('../models').orders;
 const modelHelper = require('../../helpers/modelHelper');
+const sequelize = require('sequelize');
 
 /**
  * Wraps the orders model and provides the functions more elegantly
@@ -115,6 +116,19 @@ const ordersFacade = {
         });
     });
   },
+
+  /**
+   * Gets all the items ordered and their frequency
+   *
+   * @return {Promise<Array>} - a list of all ordered items with their counts
+   */
+  getAllOrderedItemsWithCount() {
+    return Orders.findAll({
+      attributes: ['item', [sequelize.fn('count', sequelize.col('item')), 'count']],
+      group: ['item'],
+      raw: true
+    });
+  }
 };
 
 module.exports = ordersFacade;

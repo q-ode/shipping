@@ -1,5 +1,6 @@
 const ordersFacade = require('../database/facades/ordersFacade');
 const validateParameter = require('../helpers/controllerHelper').validateParameter;
+const sortHelper = require('../helpers/sortHelper');
 
 /**
  * The controller for the Orders resource
@@ -99,6 +100,21 @@ const ordersCtrl = {
       .then(() => res.send())
       .catch((errors) => res.status(400).send(errors));
   },
+
+  /**
+   * Gets a list of all items ordered and the quantity of each
+   *
+   * @param req - HTTP Request
+   * @param res - HTTP Response
+   *
+   * @return {Array} - and array of items and their count
+   */
+  getItems(req, res) {
+    ordersFacade.getAllOrderedItemsWithCount()
+      .then((items) => {
+        res.send(sortHelper.sortByCountAndAlphabet(items));
+      });
+  }
 };
 
 module.exports = ordersCtrl;
