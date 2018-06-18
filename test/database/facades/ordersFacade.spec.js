@@ -234,4 +234,15 @@ describe('Orders Facade', () => {
         });
     });
   });
+
+  describe('#getAllOrderedItemsWithCount', () => {
+    it('Should return an item with the count', (done) => {
+      ordersFacade.getAllOrderedItemsWithCount()
+        .then((items) => {
+          expect(items[0]).to.have.property('item');
+          expect(items[0]).to.have.property('count');
+          done();
+        });
+    });
+  });
 });

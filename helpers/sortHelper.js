@@ -59,5 +59,6 @@ const groupByCount = (list) => {
 };
 
 module.exports = {
-  sortByCountAndAlphabet
+  sortByCountAndAlphabet,
+  groupByCount
 };
