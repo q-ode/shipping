@@ -9,6 +9,22 @@ const validateParameter = (param) => {
   return !(!param || param.trim() === '');
 };
 
+const formatMessages = (messages) => {
+  if (messages.length === 1) {
+    return messages[0];
+  } else if (messages.length > 1) {
+    const commaDelimitedMessage = messages.join(', ');
+
+    const positionOfLastComma =
+      commaDelimitedMessage.lastIndexOf(',');
+    const commaDelimitedMessageEngingWithAndSymbol =
+      `${commaDelimitedMessage.substring(0, positionOfLastComma)} &${commaDelimitedMessage.substring(positionOfLastComma + 1)}`;
+
+    return commaDelimitedMessageEngingWithAndSymbol;
+  }
+};
+
 module.exports = {
-  validateParameter
+  validateParameter,
+  formatMessages,
 };

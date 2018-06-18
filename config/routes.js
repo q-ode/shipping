@@ -11,7 +11,6 @@ module.exports = (app) => {
   app.post('/orders', ordersCtrl.create);
   app.put('/orders/:id', ordersCtrl.update);
   app.delete('/orders/:id', ordersCtrl.delete);
-  app.delete('/orders/:id', ordersCtrl.delete);
 
   app.get('/customers/:name/orders', ordersCtrl.getCustomerOrders);
   app.get('/addresses/:address/orders', ordersCtrl.getAddressOrders);

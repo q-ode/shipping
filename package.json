@@ -10,6 +10,7 @@
     "watch": "./node_modules/.bin/nodemon ./server",
     "test-units": "mocha ./test/unit/**/*.spec.js",
     "test-database": "export NODE_ENV=test; yarn migrate-refresh; mocha ./test/database/**/*.spec.js",
+    "test-api": "export NODE_ENV=test; yarn migrate-refresh; mocha ./test/api/*.spec.js",
     "migrate-refresh": "sequelize db:migrate:undo:all; sequelize db:migrate; sequelize db:seed:all",
     "lint": "./node_modules/.bin/eslint",
     "sequelize": "./node_modules/.bin/sequelize"

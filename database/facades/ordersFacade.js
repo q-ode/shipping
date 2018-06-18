@@ -84,7 +84,7 @@ const ordersFacade = {
           if (parseInt(response[0]) === 1) {
             resolve(response[1][0]);
           } else {
-            reject(['No records updated.'])
+            reject(['No records updated'])
           }
         })
         .catch((error) => {
@@ -108,7 +108,7 @@ const ordersFacade = {
           if (parseInt(noOfDeletedRecords) > 0) {
             resolve(noOfDeletedRecords);
           } else {
-            reject(['No record deleted.'])
+            reject(['No record deleted'])
           }
         })
         .catch((error) => {

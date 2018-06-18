@@ -1,5 +1,6 @@
 const ordersFacade = require('../database/facades/ordersFacade');
 const validateParameter = require('../helpers/controllerHelper').validateParameter;
+const formatMessages = require('../helpers/controllerHelper').formatMessages;
 const sortHelper = require('../helpers/sortHelper');
 
 /**
@@ -60,7 +61,7 @@ const ordersCtrl = {
   create(req, res) {
     ordersFacade.createOrder(req.body)
       .then((order) => res.status(201).send(order))
-      .catch((errors) => res.status(400).send(errors));
+      .catch((errors) => res.status(400).send({ message: formatMessages(errors) }));
   },
 
   /**
@@ -80,7 +81,7 @@ const ordersCtrl = {
 
     ordersFacade.updateOrder(orderId, req.body)
       .then((order) => res.send(order))
-      .catch((errors) => res.status(400).send(errors));
+      .catch((errors) => res.status(400).send({ message: formatMessages(errors) }));
   },
 
   /**
@@ -93,12 +94,12 @@ const ordersCtrl = {
     const orderId = req.params.id;
 
     if (!validateParameter(orderId)) {
-      return res.status(400).send({ message: 'Invalid parameter.' });
+      return res.status(400).send({ message: 'Invalid parameter' });
     }
 
     ordersFacade.deleteOrder(orderId)
       .then(() => res.send())
-      .catch((errors) => res.status(400).send(errors));
+      .catch((errors) => res.status(404).send({ message: formatMessages(errors) }));
   },
 
   /**
@@ -114,7 +115,7 @@ const ordersCtrl = {
       .then((items) => {
         res.send(sortHelper.sortByCountAndAlphabet(items));
       });
-  }
+  },
 };
 
 module.exports = ordersCtrl;
