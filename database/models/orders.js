@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
           if (value.trim() === '') {
             throw new Error('Customer name cannot be empty');
           }
-        }
-      }
+        },
+      },
     },
     customerAddress: {
       type: DataTypes.TEXT,
@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
           if (value.trim() === '') {
             throw new Error('Customer address cannot be empty');
           }
-        }
-      }
+        },
+      },
     },
     item: {
       type: DataTypes.STRING,
@@ -32,22 +32,22 @@ module.exports = (sequelize, DataTypes) => {
           if (value.trim() === '') {
             throw new Error('Item name cannot be empty');
           }
-        }
-      }
+        },
+      },
     },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         isFloat: {
-          msg: 'Item price must be a number'
+          msg: 'Item price must be a number',
         },
         checkNumber: (value) => {
           if (parseInt(value) < 0) {
             throw new Error('Invalid item price');
           }
-        }
-      }
+        },
+      },
     },
     currency: {
       type: DataTypes.STRING,
@@ -55,14 +55,14 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: {
           args: [['EUR', 'USD']], // this will be give a more robust reference
-          msg: 'Currency given not supported'
+          msg: 'Currency given not supported',
         },
         checkEmpty: (value) => {
           if (value.trim() === '') {
             throw new Error('Currency cannot be empty');
           }
-        }
-      }
+        },
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -70,8 +70,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     hooks: {
-      beforeUpdate: setUpdatedDate
-    }
+      beforeUpdate: setUpdatedDate,
+    },
   });
 
   orders.associate = function (models) {
@@ -81,6 +81,6 @@ module.exports = (sequelize, DataTypes) => {
   return orders;
 };
 
-const setUpdatedDate = function (order, options) {
+const setUpdatedDate = function (order) {
   order.updatedAt = new Date();
 };
