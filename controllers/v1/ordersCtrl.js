@@ -1,7 +1,7 @@
-const ordersFacade = require('../database/facades/ordersFacade');
-const validateParameter = require('../helpers/controllerHelper').validateParameter;
-const formatMessages = require('../helpers/controllerHelper').formatMessages;
-const sortHelper = require('../helpers/sortHelper');
+const ordersFacade = require('../../database/facades/ordersFacade');
+const validateParameter = require('../../helpers/controllerHelper').validateParameter;
+const formatMessages = require('../../helpers/controllerHelper').formatMessages;
+const sortHelper = require('../../helpers/sortHelper');
 
 /**
  * The controller for the Orders resource

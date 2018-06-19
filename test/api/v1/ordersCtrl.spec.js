@@ -1,4 +1,4 @@
-const app = require('../../config/app'),
+const app = require('../../../config/app'),
   chai = require('chai'),
   chaiHttp = require('chai-http');
 
@@ -7,10 +7,10 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 
 describe('Orders', () => {
-  describe('POST: /orders', () => {
+  describe('POST: /v1/orders', () => {
     it('Should create an order with valid parameters are provided', (done) => {
       chai.request(app)
-        .post('/orders')
+        .post('/v1/orders')
         .send({
           customerName: 'Jane Doe',
           customerAddress: '80 John Street, Glasgow',
@@ -30,7 +30,7 @@ describe('Orders', () => {
 
     it('Should NOT create an order with missing required fields', (done) => {
       chai.request(app)
-        .post('/orders')
+        .post('/v1/orders')
         .send({
           customerName: 'Jane Doe',
           customerAddress: '80 John Street, Glasgow',
@@ -45,7 +45,7 @@ describe('Orders', () => {
 
     it('Should NOT create an order with empty required fields', (done) => {
       chai.request(app)
-        .post('/orders')
+        .post('/v1/orders')
         .send({
           customerName: '',
           customerAddress: '80 John Street, Glasgow',
@@ -61,10 +61,10 @@ describe('Orders', () => {
     });
   });
 
-  describe('PUT: /orders/:id', () => {
+  describe('PUT: /v1/orders/:id', () => {
     it('Should update a given order', (done) => {
       chai.request(app)
-        .put('/orders/1')
+        .put('/v1/orders/1')
         .send({
           customerName: 'Jane Doe'
         })
@@ -77,7 +77,7 @@ describe('Orders', () => {
 
     it('Should return an error if order number isn\'t provided', (done) => {
       chai.request(app)
-        .put('/orders')
+        .put('/v1/orders')
         .send({
           customerName: 'Jane Doe'
         })
@@ -90,9 +90,9 @@ describe('Orders', () => {
 
     it('Should respect validation rules during update', (done) => {
       chai.request(app)
-        .put('/orders/1')
+        .put('/v1/orders/1')
         .send({
-          customerName: ' '
+          customerName: ' ',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -102,10 +102,10 @@ describe('Orders', () => {
     });
   });
 
-  describe('DELETE: /orders/:id', () => {
+  describe('DELETE: /v1/orders/:id', () => {
     it('Should delete a given order', (done) => {
       chai.request(app)
-        .delete('/orders/5')
+        .delete('/v1/orders/5')
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
@@ -114,7 +114,7 @@ describe('Orders', () => {
 
     it('Should return error for an order that doesn\'t exist', (done) => {
       chai.request(app)
-        .delete('/orders/500')
+        .delete('/v1/orders/500')
         .end((err, res) => {
           expect(res).to.have.status(404);
           expect(res.body.message).to.equal('No record deleted');
@@ -123,10 +123,10 @@ describe('Orders', () => {
     });
   });
 
-  describe('GET: /customers/:name/orders', () => {
+  describe('GET: /v1/customers/:name/orders', () => {
     it('Should returns orders by customer name', (done) => {
       chai.request(app)
-        .get('/customers/John Smith/orders')
+        .get('/v1/customers/John Smith/orders')
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.have.length.above(0);
@@ -136,7 +136,7 @@ describe('Orders', () => {
 
     it('Should return no orders where customer doesn\'t exist', (done) => {
       chai.request(app)
-        .get('/customers/Harry Potter/orders')
+        .get('/v1/customers/Harry Potter/orders')
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.length).to.equal(0);
@@ -145,10 +145,10 @@ describe('Orders', () => {
     });
   });
 
-  describe('GET: /addresses/:address/orders', () => {
+  describe('GET: /v1/addresses/:address/orders', () => {
     it('Should returns orders by address', (done) => {
       chai.request(app)
-        .get('/addresses/Steindamm 80/orders')
+        .get('/v1/addresses/Steindamm 80/orders')
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.have.length.above(0);
@@ -158,7 +158,7 @@ describe('Orders', () => {
 
     it('Should return no orders where address doesn\'t exist', (done) => {
       chai.request(app)
-        .get('/addresses/House 23 Nigeria Road/orders')
+        .get('/v1/addresses/House 23 Nigeria Road/orders')
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.length).to.equal(0);
@@ -167,10 +167,10 @@ describe('Orders', () => {
     });
   });
 
-  describe('GET: /orders/items', () => {
+  describe('GET: /v1/orders/items', () => {
     it('Should order items and their frequency/count', (done) => {
       chai.request(app)
-        .get('/orders/items')
+        .get('/v1/orders/items')
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body[0]).to.have.property('item');
