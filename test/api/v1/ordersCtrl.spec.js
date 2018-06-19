@@ -20,7 +20,7 @@ describe('Orders', () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
-          expect(res.body).to.all.keys(
+          expect(res.body).to.have.all.keys(
             ['id', 'customerName', 'customerAddress', 'item', 'price',
               'currency', 'createdAt', 'updatedAt']
           );
