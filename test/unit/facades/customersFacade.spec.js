@@ -53,4 +53,22 @@ describe('Customers Facade', () => {
         });
     });
   });
+
+  describe('#deleteCustomer', () => {
+    it('Should delete a customer given valid id', (done) => {
+      customersFacade.deleteCustomer(2)
+        .then((noOfDeletedRecords) => {
+          expect(noOfDeletedRecords).to.equal(1);
+          done();
+        });
+    });
+
+    it('Should return and error for an invalid id', (done) => {
+      customersFacade.deleteCustomer(20)
+        .catch((error) => {
+          expect(error).to.deep.equal(['No record deleted']);
+          done();
+        });
+    });
+  });
 });

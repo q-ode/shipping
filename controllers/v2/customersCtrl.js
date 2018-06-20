@@ -48,6 +48,24 @@ const customersCtrl = {
       .then(customer => res.send(customer))
       .catch(errors => res.status(400).send({ message: formatMessages(errors) }));
   },
+
+  /**
+   * Deletes a customer based on the id
+   *
+   * @param req - HTTP Request containing the customer id
+   * @param res - HTTP Response
+   */
+  delete(req, res) {
+    const customerId = req.params.id;
+
+    if (!validateParameter(customerId)) {
+      return res.status(400).send({ message: 'Invalid parameter' });
+    }
+
+    customersFacade.deleteCustomer(customerId)
+      .then(() => res.send())
+      .catch(errors => res.status(404).send({ message: formatMessages(errors) }));
+  },
 };
 
 module.exports = customersCtrl;

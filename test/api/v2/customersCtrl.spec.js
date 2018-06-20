@@ -64,4 +64,25 @@ describe('Customers', () => {
         });
     });
   });
+
+  describe('DELETE: /v2/customers/:id', () => {
+    it('Should delete a given customer', (done) => {
+      chai.request(app)
+        .delete('/v2/customers/1')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('Should return error for a customer that doesn\'t exist', (done) => {
+      chai.request(app)
+        .delete('/v2/customers/30')
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.message).to.equal('No record deleted');
+          done();
+        });
+    });
+  });
 });

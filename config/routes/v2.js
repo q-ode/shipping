@@ -10,5 +10,6 @@ router.get('/', (req, res) => {
  */
 router.get('/customers/:id', customersCtrl.get);
 router.put('/customers/:id', customersCtrl.update);
+router.delete('/customers/:id', customersCtrl.delete);
 
 module.exports = router;

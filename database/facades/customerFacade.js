@@ -61,6 +61,30 @@ const customersFacade = {
         });
     });
   },
+
+  /**
+   * Deletes a customer, and uses a promise to return an appropriate response.
+   *
+   * @param {Number} id - unique id of the customer to be deleted
+   *
+   * @return {Promise<*>} - on success it returns the order on error it returns
+   * an array of failed validations
+   */
+  deleteCustomer(id) {
+    return new Promise((resolve, reject) => {
+      Customers.destroy({ where: { id } })
+        .then((noOfDeletedRecords) => {
+          if (parseInt(noOfDeletedRecords, 10) > 0) {
+            resolve(noOfDeletedRecords);
+          } else {
+            reject(['No record deleted']);
+          }
+        })
+        .catch((error) => {
+          reject(modelHelper.getError(error));
+        });
+    });
+  },
 };
 
 module.exports = customersFacade;

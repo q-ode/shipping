@@ -40,7 +40,9 @@ module.exports = (sequelize, DataTypes) => {
         isDate: true,
       },
     },
-  }, {});
+  }, {
+    paranoid: true,
+  });
   customers.associate = function(models) {
     customers.hasMany(models.customerAddresses, { as: 'addresses' });
   };

@@ -87,7 +87,7 @@ const ordersCtrl = {
   /**
    * Deletes an order based on the id
    *
-   * @param req - HTTP Request containing the order values
+   * @param req - HTTP Request containing the order id
    * @param res - HTTP Response
    */
   delete(req, res) {
