@@ -29,4 +29,39 @@ describe('Customers', () => {
         });
     });
   });
+
+  describe('PUT: /v2/customers/:id', () => {
+    it('Should update a given customer', (done) => {
+      chai.request(app)
+        .put('/v2/customers/1')
+        .send({ firstname: 'Janet' })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.firstname).to.equal('Janet');
+          done();
+        });
+    });
+
+    it('Should return an error if customer number isn\'t provided', (done) => {
+      chai.request(app)
+        .put('/v2/customers')
+        .send({ firstname: 'Janet' })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.message).to.equal('Not Found');
+          done();
+        });
+    });
+
+    it('Should respect validation rules during update', (done) => {
+      chai.request(app)
+        .put('/v2/customers/2')
+        .send({ firstname: ' ' })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.equal('Firstname cannot be empty');
+          done();
+        });
+    });
+  });
 });

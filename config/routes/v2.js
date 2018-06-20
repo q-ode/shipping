@@ -9,5 +9,6 @@ router.get('/', (req, res) => {
  * Customers
  */
 router.get('/customers/:id', customersCtrl.get);
+router.put('/customers/:id', customersCtrl.update);
 
 module.exports = router;
