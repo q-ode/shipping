@@ -81,6 +81,6 @@ module.exports = (sequelize, DataTypes) => {
   return orders;
 };
 
-const setUpdatedDate = function (order) {
+const setUpdatedDate = (order) => {
   order.updatedAt = new Date();
 };

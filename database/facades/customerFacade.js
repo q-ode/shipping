@@ -23,7 +23,16 @@ const customersFacade = {
       })
         .then((customer) => {
           if (customer) {
-            resolve(customer);
+            resolve({
+              id: customer.id,
+              firstname: customer.firstname,
+              lastname: customer.lastname,
+              dob: customer.dob,
+              email: customer.email,
+              addresses: customer.addresses,
+              createdAt: customer.createdAt,
+              updatedAt: customer.updatedAt,
+            });
           } else {
             reject();
           }
