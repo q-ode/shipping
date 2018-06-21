@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
 router.get('/customers/:id', customersCtrl.get);
 router.put('/customers/:id', customersCtrl.update);
 router.delete('/customers/:id', customersCtrl.delete);
+router.get('/items/:item/customers', customersCtrl.getCustomersByItem);
 
 /**
  * Orders

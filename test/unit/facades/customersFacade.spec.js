@@ -71,4 +71,16 @@ describe('Customers Facade', () => {
         });
     });
   });
+
+  describe('#getCustomersByItem', () => {
+    it('Should return customers based on the order item', (done) => {
+      customersFacade.getCustomersByItem('Playstation 4')
+        .then((customers) => {
+          expect(customers.length).to.be.above(0);
+          expect(customers[0]).to.have.all.keys(
+            ['id', 'firstname', 'lastname', 'dob', 'email', 'createdAt', 'updatedAt']);
+          done();
+        });
+    });
+  });
 });

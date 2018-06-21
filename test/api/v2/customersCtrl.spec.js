@@ -107,4 +107,17 @@ describe('Customers', () => {
         });
     });
   });
+
+  describe('GET: /v2/items/:name/customers', () => {
+    it('Should customers by item name', (done) => {
+      chai.request(app)
+        .get('/v2/items/Playstation 4/customers')
+        .end((err, res) => {
+          expect(res.body.length).to.be.above(0);
+          expect(res.body[0]).to.have.all.keys(
+            ['id', 'firstname', 'lastname', 'dob', 'email', 'createdAt', 'updatedAt']);
+          done();
+        });
+    });
+  });
 });

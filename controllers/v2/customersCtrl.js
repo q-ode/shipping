@@ -91,6 +91,23 @@ const customersCtrl = {
       })
       .catch(() => res.status(404).send({ message: 'Customer not found' }));
   },
+
+  /**
+   *
+   * @param req
+   * @param res
+   * @return {*}
+   */
+  getCustomersByItem(req, res) {
+    const { item } = req.params;
+
+    if (!validateParameter(item)) {
+      return res.status(400).send({ message: 'Invalid parameter' });
+    }
+
+    customersFacade.getCustomersByItem(item)
+      .then(customers => res.send(customers));
+  },
 };
 
 module.exports = customersCtrl;

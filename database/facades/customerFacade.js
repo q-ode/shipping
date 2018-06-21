@@ -1,5 +1,7 @@
+const Sequelize = require('sequelize');
 const Customers = require('../models').customers;
 const CustomerAddresses = require('../models').customerAddresses;
+const Orders = require('../models').orders;
 const modelHelper = require('../../helpers/modelHelper');
 
 /**
@@ -92,6 +94,51 @@ const customersFacade = {
         .catch((error) => {
           reject(modelHelper.getError(error));
         });
+    });
+  },
+
+  /**
+   * Queries the orders table to get all unique customers by item name.
+   *
+   * @param {String} item - the item name
+   *
+   * @return {Promise<Object>} - the customer object
+   */
+  getCustomersByItem(item) {
+    return new Promise((resolve, reject) => {
+      Orders.findAll({
+        attributes: ['customerName'],
+        where: { item },
+      })
+        .then((customerNames) => {
+          const formattedCustomerNames =
+            customerNames.map(customerName => customerName.customerName);
+
+          this.getCustomersByName(formattedCustomerNames)
+            .then(customers => resolve(customers))
+            .catch(error => reject(error));
+        })
+        .catch(error => reject(error));
+    });
+  },
+
+  /**
+   * Queries the database for customers based on their fullname i.e. combination
+   * of firstname and lastname.
+   *
+   * @param {Array<String>} customerNames - the names of the customers
+   *
+   * @return {Promise<Array<Customers>>} - the customers found
+   */
+  getCustomersByName(customerNames) {
+    return Customers.findAll({
+      attributes:
+        ['id', 'firstname', 'lastname', 'dob', 'email', 'createdAt', 'updatedAt'],
+      where:
+        Sequelize.where(Sequelize.fn('concat', Sequelize.col('firstname'), ' ', Sequelize.col('lastname')), {
+          $in: customerNames,
+        }),
+      raw: true,
     });
   },
 };
