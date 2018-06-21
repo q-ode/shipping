@@ -6,15 +6,15 @@ const customersFacade = require('../../../database/facades/customerFacade');
 describe('Customers Facade', () => {
   describe('#getCustomer', () => {
     it('Should return correct customer for a given id', (done) => {
-      customersFacade.getCustomer(1)
+      customersFacade.getCustomer(3)
         .then((customer) => {
-          expect(customer.firstname).to.equal('Peter');
+          expect(customer.firstname).to.not.be.null;
           done();
         });
     });
 
     it('Should return correct customer addresses along with customer', (done) => {
-      customersFacade.getCustomer(1)
+      customersFacade.getCustomer(3)
         .then((customer) => {
           expect(customer.address).to.not.be.null;
           done();
@@ -31,7 +31,7 @@ describe('Customers Facade', () => {
         dob: '1994-03-21',
       };
 
-      customersFacade.updateCustomer(1, newValues)
+      customersFacade.updateCustomer(3, newValues)
         .then((customer) => {
           expect(customer.firstname).to.equal(newValues.firstname);
           done();
@@ -67,18 +67,6 @@ describe('Customers Facade', () => {
       customersFacade.deleteCustomer(20)
         .catch((error) => {
           expect(error).to.deep.equal(['No record deleted']);
-          done();
-        });
-    });
-  });
-
-  describe('#getCustomersByItem', () => {
-    it('Should return customers based on the order item', (done) => {
-      customersFacade.getCustomersByItem('Playstation 4')
-        .then((customers) => {
-          expect(customers.length).to.be.above(0);
-          expect(customers[0]).to.have.all.keys(
-            ['id', 'firstname', 'lastname', 'dob', 'email', 'createdAt', 'updatedAt']);
           done();
         });
     });

@@ -62,6 +62,7 @@ const customersFacade = {
           id is the primary key.
           */
           if (parseInt(response[0], 10) === 1) {
+            // TODO: update orders table with new customer name in the background
             resolve(response[1][0]);
           } else {
             reject(['No records updated']);
