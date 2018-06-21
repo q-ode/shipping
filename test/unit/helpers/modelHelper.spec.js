@@ -70,7 +70,7 @@ describe('Model Helper', () => {
     it('Should an array of the error messages from the sequelize error object',
       () => {
         expect(getError(sequelizeError)).to.deep.equal(
-          ["Customer name cannot be empty", "Currency given not supported"]
+          ['Customer name cannot be empty', 'Currency given not supported']
         );
       });
 

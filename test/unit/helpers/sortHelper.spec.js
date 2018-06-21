@@ -108,7 +108,6 @@ describe('Sort Helper', () => {
         ];
 
         expect(sortHelper.sortByCountAndAlphabet(unSortedList)).to.deep.equal(sortedList);
-
       });
   });
 });

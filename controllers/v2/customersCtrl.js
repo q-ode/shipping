@@ -1,6 +1,7 @@
 const validateParameter = require('../../helpers/controllerHelper').validateParameter;
 const formatMessages = require('../../helpers/controllerHelper').formatMessages;
 const customersFacade = require('../../database/facades/customerFacade');
+const ordersFacade = require('../../database/facades/ordersFacade');
 
 /**
  * The controller for customer resource
@@ -65,6 +66,30 @@ const customersCtrl = {
     customersFacade.deleteCustomer(customerId)
       .then(() => res.send())
       .catch(errors => res.status(404).send({ message: formatMessages(errors) }));
+  },
+
+  /**
+   * This gets the total amount spent by a customer
+   *
+   * @param req - Http Request containing the customer id
+   * @param res - HTTP Response
+   *
+   * @return {Object} - the customer
+   */
+  getTotalSpend(req, res) {
+    const customerId = req.params.id;
+
+    if (!validateParameter(customerId)) {
+      return res.status(400).send({ message: 'Invalid parameter' });
+    }
+
+    customersFacade.getCustomer(customerId)
+      .then((customer) => {
+        ordersFacade
+          .getTotalSpendByCustomerName(`${customer.firstname} ${customer.lastname}`)
+          .then(spend => res.send(spend));
+      })
+      .catch(() => res.status(404).send({ message: 'Customer not found' }));
   },
 };
 

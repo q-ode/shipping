@@ -17,5 +17,6 @@ router.delete('/customers/:id', customersCtrl.delete);
  * Orders
  */
 router.get('/customers/:id/orders', ordersCtrl.getCustomerOrders);
+router.get('/customers/:id/spend', customersCtrl.getTotalSpend);
 
 module.exports = router;

@@ -131,6 +131,45 @@ const ordersFacade = {
       raw: true,
     });
   },
+
+  /**
+   * Computes and returns the total amount spent by a customer based on each
+   * currency type the customer has used.
+   *
+   * @param customerName - the name of the customer
+   *
+   * @return {Promise<Object>} - the total amount spent by a customer
+   */
+  getTotalSpendByCustomerName(customerName) {
+    return new Promise((resolve) => {
+      this.getOrdersByCustomerName(customerName)
+        .then((orders) => {
+          const spendBreakdownByCurrency = {};
+          orders.forEach((order) => {
+            if (spendBreakdownByCurrency[order.currency]) {
+              spendBreakdownByCurrency[order.currency] += order.price;
+            } else {
+              spendBreakdownByCurrency[order.currency] = order.price;
+            }
+          });
+          resolve(this.formatSpendResult(spendBreakdownByCurrency));
+        });
+    });
+  },
+
+  /**
+   * Formats the spend map to be an array with currency and value for each
+   * currency.
+   *
+   * @param {Object} spendBreakdown - spend breakdown by currency in a map
+   *
+   * @return {{currency: string, spend: number}[]} - formatted spend breakdown
+   */
+  formatSpendResult(spendBreakdown) {
+    return Object.keys(spendBreakdown).map((key) => {
+      return { currency: key, spend: spendBreakdown[key] };
+    });
+  },
 };
 
 module.exports = ordersFacade;

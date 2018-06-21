@@ -85,4 +85,26 @@ describe('Customers', () => {
         });
     });
   });
+
+  describe('GET: /v2/customers/:id/spend', () => {
+    it('Should get the total spend of a customer', (done) => {
+      chai.request(app)
+        .get('/v2/customers/3/spend')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.length).to.be.above(0);
+          done();
+        });
+    });
+
+    it('Should NOT return total spend for invalid customer', (done) => {
+      chai.request(app)
+        .get('/v2/customers/50/spend')
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.message).to.equal('Customer not found');
+          done();
+        });
+    });
+  });
 });

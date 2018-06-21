@@ -245,4 +245,38 @@ describe('Orders Facade', () => {
         });
     });
   });
+
+  describe('#formatSpendResult', () => {
+    it('Should return an array with correct properties from a map', () => {
+      expect(ordersFacade.formatSpendResult({
+        YEN: 2000,
+        MOE: 100,
+      })).to.deep.equal([
+        { currency: 'YEN', spend: 2000 },
+        { currency: 'MOE', spend: 100 },
+      ]);
+    });
+  });
+
+  describe('#getTotalSpendByCustomerName', () => {
+    it('Should return a breakdown of total spend by currency', (done) => {
+      ordersFacade.getTotalSpendByCustomerName('Ted Justice')
+        .then((totalSpend) => {
+          expect(totalSpend.length).to.be.above(0);
+          expect(totalSpend[0]).to.have.all.keys(['currency', 'spend']);
+          done();
+        });
+    });
+
+    it('Should return a correct total spend breakdown', (done) => {
+      ordersFacade.getTotalSpendByCustomerName('John Smith')
+        .then((totalSpend) => {
+          expect(totalSpend).to.deep.equal([
+            { currency: 'EUR', spend: 1700 },
+            { currency: 'USD', spend: 2000 },
+          ]);
+          done();
+        });
+    });
+  });
 });
